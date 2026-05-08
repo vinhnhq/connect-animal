@@ -69,5 +69,48 @@
       "enabled": true,
       "quoteStyle": "double"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["src/lib/game/**", "src/lib/ai/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "react": "Pure lib boundary: import is forbidden in src/lib/game and src/lib/ai. See CLAUDE.md.",
+                  "react-dom": "Pure lib boundary: import is forbidden in src/lib/game and src/lib/ai.",
+                  "react-dom/client": "Pure lib boundary: import is forbidden in src/lib/game and src/lib/ai.",
+                  "next": "Pure lib boundary: import is forbidden in src/lib/game and src/lib/ai.",
+                  "next/server": "Pure lib boundary: import is forbidden.",
+                  "next/navigation": "Pure lib boundary: import is forbidden.",
+                  "next/link": "Pure lib boundary: import is forbidden.",
+                  "next/image": "Pure lib boundary: import is forbidden.",
+                  "next/font/google": "Pure lib boundary: import is forbidden.",
+                  "next/font/local": "Pure lib boundary: import is forbidden.",
+                  "next/headers": "Pure lib boundary: import is forbidden.",
+                  "next/cache": "Pure lib boundary: import is forbidden."
+                }
+              }
+            },
+            "noRestrictedGlobals": {
+              "level": "error",
+              "options": {
+                "deniedGlobals": {
+                  "document": "Pure lib boundary: DOM globals are forbidden in src/lib/game and src/lib/ai.",
+                  "window": "Pure lib boundary: DOM globals are forbidden.",
+                  "fetch": "Pure lib boundary: forbidden. Inject the dependency from the caller.",
+                  "navigator": "Pure lib boundary: forbidden.",
+                  "localStorage": "Pure lib boundary: forbidden.",
+                  "sessionStorage": "Pure lib boundary: forbidden."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
 }

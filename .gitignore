@@ -47,3 +47,6 @@ bun.lockb
 test-results/
 playwright-report/
 playwright/.cache/
+
+# transient lint test fixtures
+src/lib/**/__tests__/_lint-fixture.ts
