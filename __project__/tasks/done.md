@@ -20,3 +20,4 @@ Format:
 - 2026-05-08 · `7f5abd7` · 1.3 generateBoard (Either<BoardError, Board>, shuffle-and-verify).
 - 2026-05-08 · `da9d4e3` · 1.4 shuffleRemaining preserves positions and animals.
 - 2026-05-08 · `b438d85` · 1.5 Exhaustive reducer via ts-pattern (4×6 transitions).
+- 2026-05-08 · `c6d37a6` · 1.6 findAnyValidPair returns Maybe<[Tile, Tile]>.
