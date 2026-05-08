@@ -8,7 +8,7 @@ Tasks are ordered. Each task is **red → green → refactor → commit**. A tas
 - [x] **0.2** Add Biome with strict rules (`noExplicitAny`, `useExhaustiveDependencies`, import sorting). `bun lint` passes on a fresh repo.
 - [x] **0.3** Add `bun:test` config + `happy-dom` + `@testing-library/react` + a smoke test that imports a component and asserts it renders.
 - [x] **0.4** Install shadcn/ui, generate `Button`, `Select`, `RadioGroup`, `Dialog`. Render them on a throwaway page.
-- [ ] **0.5** Add Playwright with one trivial test. Wire `bun e2e` script.
+- [x] **0.5** Add Playwright with one trivial test. Wire `bun e2e` script.
 - [ ] **0.6** Configure Biome `noRestrictedImports` to forbid `react`, `next/*`, and DOM globals from `src/lib/**`. Add a failing-then-passing test of the rule.
 - [ ] **0.7** Install `ts-pattern` and `purify-ts`. Add tsconfig path alias `@/*` → `src/*`.
 
