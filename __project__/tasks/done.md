@@ -18,3 +18,4 @@ Format:
 - 2026-05-08 · `dedd192` · 1.1 Define core game types.
 - 2026-05-08 · `d8c1f16` · 1.2 findPath (Maybe<Path>, ≤2-turn) with 11 TDD cases.
 - 2026-05-08 · `7f5abd7` · 1.3 generateBoard (Either<BoardError, Board>, shuffle-and-verify).
+- 2026-05-08 · `da9d4e3` · 1.4 shuffleRemaining preserves positions and animals.
