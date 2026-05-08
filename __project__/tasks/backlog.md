@@ -14,7 +14,7 @@ Tasks are ordered. Each task is **red → green → refactor → commit**. A tas
 
 ## Phase 1 — Pure game core (no UI)
 
-- [ ] **1.1** `lib/game/types.ts` — `Tile`, `Board`, `GameState`, `Event` discriminated unions.
+- [x] **1.1** `lib/game/types.ts` — `Tile`, `Board`, `GameState`, `Event` discriminated unions.
 - [ ] **1.2** `lib/game/path.ts` — TDD `findPath(from, to, board): Maybe<Path>`. Cases: same row, same column, one-turn, two-turn, blocked, border-route, identical points (Nothing).
 - [ ] **1.3** `lib/game/board.ts` — TDD `generateBoard(config, rng): Either<BoardError, Board>`. Property: every generated board has at least one valid pair.
 - [ ] **1.4** `lib/game/board.ts` — TDD `shuffleRemaining(board, rng): Board`. Property: result has at least one valid pair.
