@@ -154,6 +154,51 @@ function layOut(flat: readonly string[], cols: number, rows: number): Board {
   return { cols, rows, cells };
 }
 
+const MAX_SHUFFLE_ATTEMPTS = 50;
+
+export function shuffleRemaining(board: Board, rng: () => number): Board {
+  const positions: { col: number; row: number }[] = [];
+  const animals: string[] = [];
+  for (let row = 0; row < board.rows; row++) {
+    for (let col = 0; col < board.cols; col++) {
+      const cell = board.cells[row]?.[col];
+      if (cell) {
+        positions.push({ col, row });
+        animals.push(cell.animal);
+      }
+    }
+  }
+  if (positions.length === 0) return board;
+
+  for (let attempt = 0; attempt < MAX_SHUFFLE_ATTEMPTS; attempt++) {
+    const shuffled = shuffle(animals, rng);
+    const next = redistribute(board, positions, shuffled);
+    if (hasAnyValidPair(next)) return next;
+  }
+  return redistribute(board, positions, shuffle(animals, rng));
+}
+
+function redistribute(
+  board: Board,
+  positions: ReadonlyArray<{ col: number; row: number }>,
+  animals: ReadonlyArray<string>,
+): Board {
+  const cells: Cell[][] = board.cells.map((row) => row.map(() => null));
+  for (let i = 0; i < positions.length; i++) {
+    const p = positions[i];
+    const animal = animals[i];
+    if (!p || animal === undefined) continue;
+    const row = cells[p.row];
+    if (!row) continue;
+    row[p.col] = {
+      id: `${p.row}-${p.col}`,
+      position: { col: p.col, row: p.row },
+      animal,
+    };
+  }
+  return { cols: board.cols, rows: board.rows, cells };
+}
+
 function hasAnyValidPair(board: Board): boolean {
   const byAnimal = new Map<string, Tile[]>();
   for (const row of board.cells) {

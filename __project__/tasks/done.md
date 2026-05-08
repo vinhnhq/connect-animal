@@ -17,3 +17,4 @@ Format:
 - 2026-05-08 · `601fdf3` · 0.7 Install ts-pattern and purify-ts.
 - 2026-05-08 · `dedd192` · 1.1 Define core game types.
 - 2026-05-08 · `d8c1f16` · 1.2 findPath (Maybe<Path>, ≤2-turn) with 11 TDD cases.
+- 2026-05-08 · `7f5abd7` · 1.3 generateBoard (Either<BoardError, Board>, shuffle-and-verify).
