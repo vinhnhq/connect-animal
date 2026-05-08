@@ -5,7 +5,7 @@ Tasks are ordered. Each task is **red → green → refactor → commit**. A tas
 ## Phase 0 — Scaffold
 
 - [x] **0.1** Initialize Next.js 15 + TS + Tailwind v4 + Bun with `src/`. Verify `bun dev` serves the default page.
-- [ ] **0.2** Add Biome with strict rules (`noExplicitAny`, `useExhaustiveDependencies`, import sorting). `bun lint` passes on a fresh repo.
+- [x] **0.2** Add Biome with strict rules (`noExplicitAny`, `useExhaustiveDependencies`, import sorting). `bun lint` passes on a fresh repo.
 - [ ] **0.3** Add `bun:test` config + `happy-dom` + `@testing-library/react` + a smoke test that imports a component and asserts it renders.
 - [ ] **0.4** Install shadcn/ui, generate `Button`, `Select`, `RadioGroup`, `Dialog`. Render them on a throwaway page.
 - [ ] **0.5** Add Playwright with one trivial test. Wire `bun e2e` script.
