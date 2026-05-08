@@ -13,3 +13,4 @@ Format:
 - 2026-05-08 · `8611a71` · 0.3 Wire bun:test + happy-dom + Testing Library + smoke test.
 - 2026-05-08 · `d5fa9c3` · 0.4 Install shadcn/ui with Button, Select, RadioGroup, Dialog.
 - 2026-05-08 · `3f74835` · 0.5 Add Playwright with trivial home-page smoke.
+- 2026-05-08 · `eb3b440` · 0.6 Enforce pure-lib boundary via Biome overrides + boundary test.
