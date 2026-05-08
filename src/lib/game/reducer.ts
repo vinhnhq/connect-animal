@@ -1,5 +1,6 @@
 import { match } from "ts-pattern";
 import { generateBoard, shuffleRemaining } from "@/lib/game/board";
+import { findAnyValidPair } from "@/lib/game/hint";
 import { findPath } from "@/lib/game/path";
 import type {
   Board,
@@ -12,7 +13,6 @@ import type {
   Player,
   Playing,
   Position,
-  Tile,
   Won,
 } from "@/lib/game/types";
 
@@ -133,32 +133,10 @@ function handleSelect(state: Playing, player: Player, at: Position): GameState {
 }
 
 function handleHint(state: Playing): Playing {
-  return { ...state, hint: findAnyValidPair(state.board) };
-}
-
-function findAnyValidPair(board: Board): readonly [Position, Position] | null {
-  const byAnimal = new Map<string, Tile[]>();
-  for (const row of board.cells) {
-    for (const cell of row) {
-      if (!cell) continue;
-      const list = byAnimal.get(cell.animal) ?? [];
-      list.push(cell);
-      byAnimal.set(cell.animal, list);
-    }
-  }
-  for (const list of byAnimal.values()) {
-    for (let i = 0; i < list.length; i++) {
-      for (let j = i + 1; j < list.length; j++) {
-        const a = list[i];
-        const b = list[j];
-        if (!a || !b) continue;
-        if (findPath(a.position, b.position, board).isJust()) {
-          return [a.position, b.position];
-        }
-      }
-    }
-  }
-  return null;
+  const hint = findAnyValidPair(state.board)
+    .map(([a, b]): readonly [Position, Position] => [a.position, b.position])
+    .extract();
+  return { ...state, hint: hint ?? null };
 }
 
 function cellAt(board: Board, p: Position): Cell {

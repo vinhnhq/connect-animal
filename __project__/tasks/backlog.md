@@ -19,7 +19,7 @@ Tasks are ordered. Each task is **red → green → refactor → commit**. A tas
 - [x] **1.3** `lib/game/board.ts` — TDD `generateBoard(config, rng): Either<BoardError, Board>`. Property: every generated board has at least one valid pair.
 - [x] **1.4** `lib/game/board.ts` — TDD `shuffleRemaining(board, rng): Board`. Property: result has at least one valid pair.
 - [x] **1.5** `lib/game/reducer.ts` — TDD reducer via `ts-pattern.match`. Cover every `(state, event)` pair, including no-ops.
-- [ ] **1.6** `lib/game/hint.ts` — `findAnyValidPair(board): Maybe<[Tile, Tile]>`. Reuses `findPath`.
+- [x] **1.6** `lib/game/hint.ts` — `findAnyValidPair(board): Maybe<[Tile, Tile]>`. Reuses `findPath`.
 - [ ] **1.7** Property tests with seeded RNG: 1000 random boards, all solvable from generation, none deadlock without shuffle being legal.
 
 ## Phase 2 — Computer opponent
