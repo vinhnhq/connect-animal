@@ -24,3 +24,4 @@ Format:
 - 2026-05-08 · `d55d14b` · 1.7 Seeded property tests (1000 boards solvable, 100 play-to-completion).
 - 2026-05-11 · `3f906cb` · 2.1 pickMove for Easy/Medium/Hard.
 - 2026-05-11 · `4e61103` · 2.2 nextDelayMs cadence per difficulty.
+- 2026-05-11 · `93f96f7` · 2.3 AI vs. board integration test (10 seeds × 3 difficulties).
