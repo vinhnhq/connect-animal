@@ -1,70 +1,97 @@
-"use client";
+import Link from "next/link";
 
-import { Button } from "@/lib/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/lib/ui/dialog";
-import { RadioGroup, RadioGroupItem } from "@/lib/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/lib/ui/select";
+const VARIANTS = [
+  {
+    slug: "v1",
+    name: "Editorial Swiss",
+    blurb: "Strict grid, hairlines, label-style stats, monospaced numerics.",
+    accent: "#C41E3A",
+  },
+  {
+    slug: "v2",
+    name: "Serif Magazine",
+    blurb: "Cream paper, serif display, italic flourishes — print energy.",
+    accent: "#7C1D2E",
+  },
+  {
+    slug: "v3",
+    name: "Brutalist",
+    blurb: "Heavy black borders, big sans, slabs of crimson behind labels.",
+    accent: "#DC143C",
+  },
+  {
+    slug: "v4",
+    name: "Tactile Board",
+    blurb: "Subtle inset board, muted tones, physical-table feel.",
+    accent: "#A52A2A",
+  },
+  {
+    slug: "v5",
+    name: "Mono Terminal",
+    blurb: "Monospace everywhere, > prompt lines, developer-blog vibe.",
+    accent: "#FF1744",
+  },
+  {
+    slug: "v6",
+    name: "Bold Modern",
+    blurb: "Confident Inter, generous spacing, crimson CTAs — SaaS polish.",
+    accent: "#DC2626",
+  },
+];
 
-export default function PreviewPage() {
+export default function PreviewIndex() {
   return (
-    <main className="mx-auto flex max-w-md flex-col gap-8 p-8">
-      <h1 className="text-2xl font-bold">shadcn smoke test</h1>
+    <main className="mx-auto max-w-3xl px-6 py-16">
+      <header className="mb-12">
+        <p className="text-xs uppercase tracking-[0.18em] text-neutral-500">Design previews</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight">
+          Connect Animal — six directions
+        </h1>
+        <p className="mt-3 max-w-prose text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+          Six interpretations of the same brief: minimal modern, chess-board tile pattern, bold
+          crimson primary, stats above the board, light/dark by OS. Each variant also has to host a
+          blog later, so the visual system is tested with a sample post at the bottom of every page.
+          Pick one to continue with, mix and match, or use as a starting point for a custom
+          direction.
+        </p>
+      </header>
 
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-medium text-muted-foreground">Button</h2>
-        <Button>Start</Button>
-      </section>
+      <ul className="grid gap-3">
+        {VARIANTS.map((v) => (
+          <li key={v.slug}>
+            <Link
+              href={`/preview/${v.slug}`}
+              className="flex items-center gap-4 rounded-lg border border-neutral-200 p-4 transition-colors hover:border-neutral-300 dark:border-neutral-800 dark:hover:border-neutral-700"
+            >
+              <span
+                aria-hidden
+                className="h-10 w-10 shrink-0 rounded"
+                style={{ backgroundColor: v.accent }}
+              />
+              <span className="flex-1">
+                <span className="block font-medium">
+                  {v.slug.toUpperCase()} · {v.name}
+                </span>
+                <span className="mt-0.5 block text-sm text-neutral-600 dark:text-neutral-400">
+                  {v.blurb}
+                </span>
+              </span>
+              <span aria-hidden className="text-neutral-400">
+                →
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
 
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-medium text-muted-foreground">Select</h2>
-        <Select defaultValue="medium">
-          <SelectTrigger>
-            <SelectValue placeholder="Board size" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="small">Small</SelectItem>
-            <SelectItem value="medium">Medium</SelectItem>
-            <SelectItem value="large">Large</SelectItem>
-          </SelectContent>
-        </Select>
-      </section>
-
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-medium text-muted-foreground">RadioGroup</h2>
-        <RadioGroup defaultValue="medium">
-          <label htmlFor="diff-easy" className="flex items-center gap-2 text-sm">
-            <RadioGroupItem id="diff-easy" value="easy" /> Easy
-          </label>
-          <label htmlFor="diff-medium" className="flex items-center gap-2 text-sm">
-            <RadioGroupItem id="diff-medium" value="medium" /> Medium
-          </label>
-          <label htmlFor="diff-hard" className="flex items-center gap-2 text-sm">
-            <RadioGroupItem id="diff-hard" value="hard" /> Hard
-          </label>
-        </RadioGroup>
-      </section>
-
-      <section className="flex flex-col gap-2">
-        <h2 className="text-sm font-medium text-muted-foreground">Dialog</h2>
-        <Dialog>
-          <DialogTrigger render={<Button variant="outline">Open dialog</Button>} />
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Smoke test</DialogTitle>
-              <DialogDescription>If you can read this, dialogs render.</DialogDescription>
-            </DialogHeader>
-            <DialogFooter showCloseButton />
-          </DialogContent>
-        </Dialog>
-      </section>
+      <footer className="mt-12 border-t border-neutral-200 pt-6 text-sm dark:border-neutral-800">
+        <Link
+          href="/preview/primitives"
+          className="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
+        >
+          → shadcn primitives smoke test
+        </Link>
+      </footer>
     </main>
   );
 }

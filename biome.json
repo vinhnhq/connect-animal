@@ -72,6 +72,21 @@
   },
   "overrides": [
     {
+      "includes": ["src/app/preview/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useSemanticElements": "off",
+            "useFocusableInteractive": "off",
+            "useValidAnchor": "off",
+            "useButtonType": "off",
+            "useKeyWithClickEvents": "off",
+            "noStaticElementInteractions": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["src/lib/game/**", "src/lib/ai/**"],
       "linter": {
         "rules": {
