@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "NEXT_BUILD_DIR=.next-prod next build",
+    "start": "NEXT_BUILD_DIR=.next-prod next start",
     "lint": "biome check .",
     "format": "biome check --write .",
     "typecheck": "tsc --noEmit",
