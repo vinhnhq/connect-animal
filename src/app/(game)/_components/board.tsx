@@ -160,7 +160,7 @@ function CellView({
       tabIndex={tabIndex}
       onClick={() => onActivate({ col, row })}
       onKeyDown={(e) => onKey(e, { col, row })}
-      className="relative flex aspect-square items-center justify-center border border-black/30 text-xl leading-none sm:text-3xl dark:border-white/30"
+      className="relative flex aspect-square items-center justify-center border border-black/30 text-xl leading-none outline-offset-[-3px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#DC143C] sm:text-3xl dark:border-white/30"
       style={{
         backgroundColor: isLight ? "#FFFFFF" : "#000000",
         color: isLight ? "#000000" : "#FFFFFF",
