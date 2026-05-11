@@ -59,6 +59,12 @@ UI code unwraps with `.caseOf({ Just, Nothing })` or `.caseOf({ Left, Right })` 
 - `prefers-reduced-motion: reduce` shortens transitions to ~50 ms but doesn't remove the path flash (it conveys correctness, not just polish).
 - Color is never the sole signal; selected tiles also get a thick outline and a focus ring.
 
+## Design system
+
+V3 brutalist (dialed-down) is the locked visual language for both the game and the future blog. Full token reference and component stories live at **`/preview`** ([`src/app/preview/page.tsx`](../../src/app/preview/page.tsx)). Short version in [`design.md`](design.md).
+
+The page exists for visual reference only — it imports no game logic and is not wired into routing for end-users. Phase 3 UI work consumes the tokens from there.
+
 ## Determinism and testability
 
 - All randomness flows through an injected `rng: () => number`. Tests pass a seeded PRNG; production passes `Math.random`.

@@ -25,3 +25,4 @@ Format:
 - 2026-05-11 · `3f906cb` · 2.1 pickMove for Easy/Medium/Hard.
 - 2026-05-11 · `4e61103` · 2.2 nextDelayMs cadence per difficulty.
 - 2026-05-11 · `93f96f7` · 2.3 AI vs. board integration test (10 seeds × 3 difficulties).
+- 2026-05-11 · `caa39db` · Design system locked — V3 brutalist (dialed down). Storybook at `/preview`, tokens documented in `docs/design.md`.

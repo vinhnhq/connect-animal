@@ -10,6 +10,7 @@ Read these before making changes:
 
 - [`__project__/docs/game-rules.md`](__project__/docs/game-rules.md) — exact rules, board sizes, scoring
 - [`__project__/docs/architecture.md`](__project__/docs/architecture.md) — layering, state machine, what lives where
+- [`__project__/docs/design.md`](__project__/docs/design.md) — locked visual system (V3 tokens), live storybook at `/preview`
 - [`__project__/specs/v1-solo-vs-computer.md`](__project__/specs/v1-solo-vs-computer.md) — current acceptance criteria
 - [`__project__/tasks/backlog.md`](__project__/tasks/backlog.md) — ordered TDD task list
 
