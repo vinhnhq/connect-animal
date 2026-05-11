@@ -84,7 +84,14 @@ export default function PreviewIndex() {
         ))}
       </ul>
 
-      <footer className="mt-12 border-t border-neutral-200 pt-6 text-sm dark:border-neutral-800">
+      <footer className="mt-12 flex flex-col gap-2 border-t border-neutral-200 pt-6 text-sm dark:border-neutral-800">
+        <Link
+          href="/preview/storybook"
+          className="font-medium text-neutral-900 hover:underline dark:text-neutral-100"
+          style={{ textDecorationColor: "#DC143C" }}
+        >
+          → V3 design system storybook
+        </Link>
         <Link
           href="/preview/primitives"
           className="text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100"
