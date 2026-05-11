@@ -26,7 +26,7 @@ Tasks are ordered. Each task is **red → green → refactor → commit**. A tas
 
 - [x] **2.1** `lib/ai/move.ts` — TDD `pickMove(board, difficulty, rng): Maybe<Move>` for Easy / Medium / Hard.
 - [x] **2.2** `lib/ai/cadence.ts` — pure `nextDelayMs(difficulty, rng): number`.
-- [ ] **2.3** Integration test: AI vs. board → eventually clears (bounded number of moves).
+- [x] **2.3** Integration test: AI vs. board → eventually clears (bounded number of moves).
 
 ## Phase 3 — UI: configure → play
 

@@ -23,3 +23,4 @@ Format:
 - 2026-05-08 · `c6d37a6` · 1.6 findAnyValidPair returns Maybe<[Tile, Tile]>.
 - 2026-05-08 · `d55d14b` · 1.7 Seeded property tests (1000 boards solvable, 100 play-to-completion).
 - 2026-05-11 · `3f906cb` · 2.1 pickMove for Easy/Medium/Hard.
+- 2026-05-11 · `4e61103` · 2.2 nextDelayMs cadence per difficulty.
