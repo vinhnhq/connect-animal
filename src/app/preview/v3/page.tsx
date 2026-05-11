@@ -1,47 +1,48 @@
 import { BLOG_PREVIEW, COLS, SAMPLE_BOARD, SELECTED, STATS } from "../_data";
 
-// V3 — Brutalist.
-// Thick black borders, big chunky type, crimson blocks behind labels.
-// Slightly off-grid so it feels human, not generated.
+// V3 — Brutalist (dialed down). Locked design system. See storybook.
+// Mobile-first: scales from 320px up; tiles never drop below ~40px tap target
+// on the smallest phones (8 cols × 320 - padding ≈ 36–40 px). Buttons span
+// full width on mobile so they remain thumb-reachable.
 
 const ACCENT = "#DC143C";
 
 export default function V3() {
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
-      <div className="mx-auto max-w-4xl px-4 py-8">
-        <header className="border-y-[3px] border-black py-6 dark:border-white">
-          <h1 className="text-5xl font-medium uppercase leading-[0.95] tracking-tight">
+      <div className="mx-auto max-w-4xl px-3 py-6 sm:px-4 sm:py-8">
+        <header className="border-y-[3px] border-black py-4 sm:py-6 dark:border-white">
+          <h1 className="text-3xl font-medium uppercase leading-[0.95] tracking-tight sm:text-5xl">
             Connect
             <br />
             <span style={{ color: ACCENT }}>Animal</span>
           </h1>
         </header>
 
-        <section className="mt-6 grid grid-cols-[1fr_1fr_1fr] divide-x-[3px] divide-black border-x-[3px] border-b-[3px] border-black dark:divide-white dark:border-white">
+        <section className="mt-4 grid grid-cols-3 divide-x-[3px] divide-black border-x-[3px] border-b-[3px] border-black sm:mt-6 dark:divide-white dark:border-white">
           <Stat label="Time" value={STATS.timeLabel} />
           <Stat label="Score" value={`${STATS.human}-${STATS.computer}`} />
           <Stat label="AI" value={STATS.ai} accent />
         </section>
 
-        <main className="mt-8">
+        <main className="mt-6 sm:mt-8">
           <Board />
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-wrap sm:gap-3">
             <button
               type="button"
-              className="border-[3px] border-black bg-white px-5 py-2 text-sm font-medium uppercase tracking-wider hover:bg-black hover:text-white dark:border-white dark:bg-black dark:hover:bg-white dark:hover:text-black"
+              className="border-[3px] border-black bg-white px-4 py-2.5 text-sm font-medium uppercase tracking-wider hover:bg-black hover:text-white sm:px-5 sm:py-2 dark:border-white dark:bg-black dark:hover:bg-white dark:hover:text-black"
             >
               Hint
             </button>
             <button
               type="button"
-              className="border-[3px] border-black bg-white px-5 py-2 text-sm font-medium uppercase tracking-wider hover:bg-black hover:text-white dark:border-white dark:bg-black dark:hover:bg-white dark:hover:text-black"
+              className="border-[3px] border-black bg-white px-4 py-2.5 text-sm font-medium uppercase tracking-wider hover:bg-black hover:text-white sm:px-5 sm:py-2 dark:border-white dark:bg-black dark:hover:bg-white dark:hover:text-black"
             >
               Shuffle
             </button>
             <button
               type="button"
-              className="border-[3px] border-black px-5 py-2 text-sm font-medium uppercase tracking-wider text-white dark:border-white"
+              className="col-span-2 border-[3px] border-black px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-white sm:col-span-1 sm:px-5 sm:py-2 dark:border-white"
               style={{ backgroundColor: ACCENT }}
             >
               ▶ New game
@@ -57,14 +58,16 @@ export default function V3() {
 
 function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
-    <div className="flex flex-col">
+    <div className="flex min-w-0 flex-col">
       <span
-        className="px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-white"
+        className="px-2 py-1 text-[9px] font-medium uppercase tracking-[0.18em] text-white sm:px-3 sm:text-[10px] sm:tracking-[0.2em]"
         style={{ backgroundColor: accent ? ACCENT : "black" }}
       >
         {label}
       </span>
-      <span className="px-3 py-3 font-mono text-2xl tabular-nums">{value}</span>
+      <span className="truncate px-2 py-2 font-mono text-base tabular-nums sm:px-3 sm:py-3 sm:text-2xl">
+        {value}
+      </span>
     </div>
   );
 }
@@ -84,7 +87,7 @@ function Board() {
           <div
             key={`${cell.col}-${cell.row}`}
             role="gridcell"
-            className="relative flex aspect-square items-center justify-center border border-black/30 text-3xl dark:border-white/30"
+            className="relative flex aspect-square items-center justify-center border border-black/30 text-xl sm:text-3xl dark:border-white/30"
             style={{
               backgroundColor: isSelected ? ACCENT : isLight ? "#FFFFFF" : "#000000",
               color: isLight && !isSelected ? "#000" : "#FFF",
@@ -100,20 +103,20 @@ function Board() {
 
 function BlogTeaser() {
   return (
-    <section className="mt-16 border-t-[3px] border-black pt-6 dark:border-white">
+    <section className="mt-12 border-t-[3px] border-black pt-6 sm:mt-16 dark:border-white">
       <span
         className="inline-block px-2 py-0.5 text-xs font-medium uppercase tracking-[0.2em] text-white"
         style={{ backgroundColor: ACCENT }}
       >
         Posts
       </span>
-      <h2 className="mt-3 text-2xl font-medium leading-snug tracking-tight">
+      <h2 className="mt-3 text-xl font-medium leading-snug tracking-tight sm:text-2xl">
         {BLOG_PREVIEW.title}
       </h2>
       <time className="mt-2 block font-mono text-xs uppercase tracking-[0.18em] text-neutral-500">
         {BLOG_PREVIEW.date}
       </time>
-      <p className="mt-4 max-w-prose text-base leading-relaxed">{BLOG_PREVIEW.body}</p>
+      <p className="mt-4 max-w-prose text-sm leading-relaxed sm:text-base">{BLOG_PREVIEW.body}</p>
     </section>
   );
 }

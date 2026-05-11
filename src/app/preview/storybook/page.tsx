@@ -54,17 +54,35 @@ const SECTIONS = [
 export default function Storybook() {
   return (
     <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
-      <div className="mx-auto grid max-w-6xl grid-cols-[220px_1fr] gap-12 px-6 py-12">
-        <Toc />
+      <MobileToc />
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-8 sm:px-6 sm:py-12 lg:grid-cols-[220px_1fr] lg:gap-12">
+        <DesktopToc />
         <Main />
       </div>
     </div>
   );
 }
 
-function Toc() {
+function MobileToc() {
+  // Horizontal chip strip, sticky at top — only visible below lg.
   return (
-    <aside className="sticky top-12 self-start">
+    <nav className="sticky top-0 z-10 flex gap-2 overflow-x-auto border-b-[3px] border-black bg-white px-4 py-2 text-[10px] font-medium uppercase tracking-[0.18em] lg:hidden dark:border-white dark:bg-black">
+      {SECTIONS.flatMap((sec) => sec.items).map((it) => (
+        <a
+          key={it.id}
+          href={`#${it.id}`}
+          className="shrink-0 whitespace-nowrap border border-black/30 px-2 py-1 dark:border-white/30"
+        >
+          {it.label}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+function DesktopToc() {
+  return (
+    <aside className="hidden self-start lg:sticky lg:top-12 lg:block">
       <p className="border-b-[3px] border-black pb-2 text-[10px] font-medium uppercase tracking-[0.2em] dark:border-white">
         Storybook
       </p>
@@ -131,7 +149,7 @@ function Foundations() {
       title="Tokens the rest of the system is built from."
     >
       <Story id="color" label="Color">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
           <Swatch name="ink" hex="#000000" />
           <Swatch name="paper" hex="#FFFFFF" border />
           <Swatch name="crimson" hex={ACCENT} />
@@ -234,7 +252,7 @@ function TypeRow({
   className: string;
 }) {
   return (
-    <div className="grid grid-cols-[180px_1fr] items-baseline gap-6 border-b border-black/10 pb-3 dark:border-white/10">
+    <div className="grid gap-1 border-b border-black/10 pb-3 sm:grid-cols-[180px_1fr] sm:items-baseline sm:gap-6 dark:border-white/10">
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-neutral-500">
         {label}
       </span>
@@ -515,10 +533,13 @@ function Blog() {
               tag: "tooling",
             },
           ].map((p) => (
-            <li key={p.title} className="grid grid-cols-[1fr_auto] items-baseline gap-6 py-4">
+            <li
+              key={p.title}
+              className="grid gap-2 py-4 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-6"
+            >
               <a
                 href="#"
-                className="text-lg font-medium tracking-tight hover:underline"
+                className="text-base font-medium tracking-tight hover:underline sm:text-lg"
                 style={{ textDecorationColor: ACCENT, textUnderlineOffset: "4px" }}
               >
                 {p.title}
