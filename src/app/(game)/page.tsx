@@ -1,10 +1,13 @@
 "use client";
 
-import { startTransition, useRef } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import { BoardView } from "@/app/(game)/_components/board";
 import { ConfigForm, type ConfigFormHandle } from "@/app/(game)/_components/config-form";
+import { PathFlash } from "@/app/(game)/_components/path-flash";
 import { useGame } from "@/hooks/use-game";
-import type { Config } from "@/lib/game/types";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { findPath } from "@/lib/game/path";
+import type { Cell, Config, Path, Position } from "@/lib/game/types";
 
 const INITIAL_CONFIG: Config = {
   boardSize: "medium",
@@ -15,9 +18,18 @@ const INITIAL_CONFIG: Config = {
 export default function GamePage() {
   const game = useGame({ initialConfig: INITIAL_CONFIG });
   const configRef = useRef<ConfigFormHandle | null>(null);
+  const reducedMotion = useReducedMotion();
+  const [flash, setFlash] = useState<{ path: Path; key: number } | null>(null);
 
   const isPlaying = game.state.status === "Playing";
   const isTerminal = game.state.status === "Won" || game.state.status === "Lost";
+
+  useEffect(() => {
+    if (!flash) return;
+    const duration = reducedMotion ? 60 : 340;
+    const t = setTimeout(() => setFlash(null), duration);
+    return () => clearTimeout(t);
+  }, [flash, reducedMotion]);
 
   function handleStart(config: Config) {
     withViewTransition(() => {
@@ -25,7 +37,16 @@ export default function GamePage() {
     });
   }
 
-  function handleSelect(pos: { col: number; row: number }) {
+  function handleSelect(pos: Position) {
+    if (game.state.status !== "Playing") return;
+    const prev = game.state.selected;
+    if (prev) {
+      const a = cellAt(game.state.board.cells, prev);
+      const b = cellAt(game.state.board.cells, pos);
+      if (a && b && a.animal === b.animal && !(prev.col === pos.col && prev.row === pos.row)) {
+        findPath(prev, pos, game.state.board).ifJust((p) => setFlash({ path: p, key: Date.now() }));
+      }
+    }
     game.select("human", pos);
   }
 
@@ -55,21 +76,34 @@ export default function GamePage() {
 
       {isPlaying && game.state.status === "Playing" ? (
         <section className="mt-8 space-y-4">
-          <BoardView
-            board={game.state.board}
-            selected={game.state.selected}
-            hint={game.state.hint}
-            onSelect={handleSelect}
-            onDeselect={() => {
-              if (game.state.status === "Playing" && game.state.selected) {
-                game.select("human", game.state.selected);
-              }
-            }}
-          />
+          <div className="relative">
+            <BoardView
+              board={game.state.board}
+              selected={game.state.selected}
+              hint={game.state.hint}
+              onSelect={handleSelect}
+              onDeselect={() => {
+                if (game.state.status === "Playing" && game.state.selected) {
+                  game.select("human", game.state.selected);
+                }
+              }}
+            />
+            <PathFlash
+              key={flash?.key}
+              path={flash?.path ?? null}
+              cols={game.state.board.cols}
+              rows={game.state.board.rows}
+              reducedMotion={reducedMotion}
+            />
+          </div>
         </section>
       ) : null}
     </main>
   );
+}
+
+function cellAt(cells: ReadonlyArray<ReadonlyArray<Cell>>, pos: Position): Cell {
+  return cells[pos.row]?.[pos.col] ?? null;
 }
 
 function withViewTransition(fn: () => void) {
