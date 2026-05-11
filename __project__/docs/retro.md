@@ -4,6 +4,51 @@ Rolling log. Each retro is a section, newest at the top, delimited by its own ti
 
 ---
 
+## Phase 3 + 4 + 5 — v1 ship
+
+> **Date:** 2026-05-11
+> **Phases covered:** 3 (UI: configure → play) · 4 (polish) · 5 (docs) · plus 4 retro items pulled forward
+> **Status:** Closed for the shipped items. Remaining items from the prior retro stay Open.
+> **Headcount snapshot:** 148 tests · 4,730 expects · all 14 v1 tasks shipped · 4 retro items also shipped · Lighthouse on prod build is **100 / 100 / 100 / 100** (Perf / A11y / Best Practices / SEO) · `bun lint` / `typecheck` / `test` / `e2e` / `build` all green at SHA `eae6131`.
+
+### What went well
+
+- **Pure-core boundary stayed honest.** Adding the `Match` event for the AI didn't leak React into `lib/`. The reducer's exhaustive `match()` caught one straggler (a types-test `match` over `Event` that needed the new variant), and TS+ts-pattern told us about it immediately.
+- **Hint button as a Playwright crutch.** Finding a valid pair from the DOM is hard (random board + path-finder). Using the in-app Hint to surface a known-valid pair, then reading both `data-hinted` test-ids *before* the first click (the hint clears on Select), made the smoke test boring in the best way.
+- **`document.startViewTransition` was a clean fallback** for the planned `<ViewTransition>`. Two extra lines, same effect, no experimental React dependency.
+- **TDD held across UI work too.** Every component (ConfigForm, BoardView, Toolbar, GameOver, PathFlash) shipped with a red-first test. Where bun:test + happy-dom missed an assertion (the `expect.stringContaining` ↔ `toHaveAttribute` matcher choked), the fallback was a string `.toContain` — fast to diagnose.
+- **Lighthouse 100s on first real run.** The Phase 4 prep (semantic HTML, focus rings, V3 contrast, metadata) translated 1:1. Only one issue surfaced — a `/favicon.ico` 404 — and fixing it with `src/app/icon.svg` brought every category to 100.
+
+### What didn't go well / friction
+
+- **Experimental React APIs aren't usable in stable 19.2.** `<Activity>` is a symbol marker only, `<ViewTransition>` / `addTransitionType` aren't exported. The architecture doc had committed to them. Cost: rewriting that section after the fact and shipping the stable equivalents (`hidden` attribute + `document.startViewTransition`).
+- **shadcn primitives were dead weight.** Phase 0 generated four primitives (Dialog, Select, RadioGroup, Button), Phase 3 built the game UI without them, and they sat as committed-but-unimported code until R10 deleted them along with `@base-ui/react`, `lucide-react`, `class-variance-authority`, `tw-animate-css`, and `shadcn`. The lesson: don't generate primitives until something is about to consume one.
+- **`Activity`-as-symbol error surfaces only at build time.** `typeof Activity === 'symbol'` is fine in Node, fine in bun test, fine in `next dev`. Production `next build` is where `Element type is invalid` fires. Tests didn't catch it.
+- **Next 15 rewrites `tsconfig.json` during build.** R4 (separate build dir) tripped on this — biome flagged the reformatted file. A `pre-commit` hook would mask the fix; explicit `bun format` is fine.
+- **Lighthouse needs a real headless Chrome.** `bunx lighthouse` works locally (Playwright's chromium counts) but a fresh CI container would need `--with-deps`. Worth flagging if we ever wire Lighthouse into CI.
+
+### Resolved (from prior retro)
+
+- **Item 1** (Spike `<Activity>` + `<ViewTransition>`) — resolved by discovery. Documented in architecture.md.
+- **Item 2** (Minimal CI) — shipped at `eeb2738`. `.github/workflows/ci.yml` runs lint + typecheck + test, plus an e2e job that installs chromium.
+- **Item 4** (Separate build output dir) — shipped at `7a7d046`. `NEXT_BUILD_DIR=.next-prod next build` keeps dev and prod artifacts apart.
+- **Item 5** (Restyle shadcn primitives) — replaced by **R10: delete them**, shipped at `57fd8a9`. The retro's framing was wrong — restyling something nobody imports is busywork.
+- **New item 9** (Run Lighthouse for real) — shipped at `eae6131`. 100/100/100/100.
+
+### Still Open (from prior retro)
+
+- **Item 3** Pre-commit hook for lint + typecheck. Mostly subsumed by CI now; pull in if local-vs-CI drift becomes a real problem.
+- **Item 6** Real-device mobile pass — now applies to both `/preview` *and* the wired game UI. Needs a human and a phone.
+- **Item 7** Harden `test-setup.ts` preload order. Untouched.
+- **Item 8** Tighten cadence tests (per-decile, not just averages). Untouched.
+
+### New Open items
+
+- **Item 11** When React 19.x stable exposes `<Activity>` and `<ViewTransition>` + `addTransitionType`, swap back. We get explicit transition types (`config-to-play`, `tile-clear`, `game-end`) and the lint-friendly JSX form. Mostly cosmetic — current implementation works.
+- **Item 12** Wire Lighthouse into CI (separate job, build → start → audit → assert score thresholds). Useful regression net for Phase 6+.
+
+---
+
 ## Phase 0 + 1 + 2 + Design Lock
 
 > **Date:** 2026-05-11
