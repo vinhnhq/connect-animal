@@ -16,6 +16,14 @@ import type {
   Won,
 } from "@/lib/game/types";
 
+/**
+ * The pure game reducer. Dispatches `(state, event)` exhaustively via
+ * ts-pattern: every state handles every event explicitly, so adding a new
+ * Event or GameState variant fails the type check until each transition is
+ * defined. The reducer is the single source of truth for game flow; React,
+ * AI, and (future) the v2 server all feed it events. Time and randomness
+ * enter through event fields (`now`, `rng`) — the reducer never reads them.
+ */
 export function reducer(state: GameState, event: Event): GameState {
   return match(state)
     .with({ status: "Configuring" }, (s) => onConfiguring(s, event))

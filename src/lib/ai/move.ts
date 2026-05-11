@@ -8,6 +8,15 @@ type Candidate = {
   path: Path;
 };
 
+/**
+ * Pick a valid move for the computer, weighted by difficulty:
+ *   - `easy` — uniformly random among all valid pairs (ignores path length)
+ *   - `medium` — weighted toward shorter paths (`weight = 1 / length²`),
+ *     so long-shot matches still surface occasionally
+ *   - `hard` — always picks the shortest path (deterministic given the board)
+ * Returns `Nothing` only when no valid pair exists. The caller — UI or v2
+ * server — is responsible for scheduling and dispatch.
+ */
 export function pickMove(board: Board, difficulty: Difficulty, rng: () => number): Maybe<Move> {
   const candidates = allValidPairs(board);
   if (candidates.length === 0) return Nothing;

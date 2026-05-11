@@ -89,6 +89,13 @@ const ANIMAL_SETS: Record<string, readonly string[]> = {
 
 const MAX_GENERATION_ATTEMPTS = 50;
 
+/**
+ * Generate a fresh solvable board for the given config. Lays each animal-pair
+ * onto the grid via the supplied `rng`, then verifies the board has at least
+ * one valid (≤2-turn) pair using `findAnyValidPair`; retries up to 50 times.
+ * Returns `Left(BoardError)` if the config is impossible (odd cell count,
+ * insufficient animals) or if no solvable layout is found.
+ */
 export function generateBoard(config: Config, rng: () => number): Either<BoardError, Board> {
   const dims = BOARD_DIMENSIONS[config.boardSize];
   const total = dims.cols * dims.rows;
@@ -155,6 +162,12 @@ function layOut(flat: readonly string[], cols: number, rows: number): Board {
 
 const MAX_SHUFFLE_ATTEMPTS = 50;
 
+/**
+ * Reshuffle the remaining (non-cleared) tiles into the same positions, retrying
+ * up to 50 times until the result has at least one valid pair. Preserves the
+ * set of occupied positions and the set of animals — only their assignment is
+ * permuted. Use when `findAnyValidPair` returns Nothing during play.
+ */
 export function shuffleRemaining(board: Board, rng: () => number): Board {
   const positions: { col: number; row: number }[] = [];
   const animals: string[] = [];

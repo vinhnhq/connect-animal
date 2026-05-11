@@ -46,6 +46,13 @@ function compress(points: ReadonlyArray<Position>): Path {
   return out;
 }
 
+/**
+ * Find a connecting path between two cells with at most two turns (≤ three
+ * straight segments). The path may travel through empty cells or the one-cell
+ * border outside the grid. Returns `Nothing` if `from === to`, if either point
+ * sits outside the grid, or if no ≤2-turn route exists. The returned path
+ * always starts at `from` and ends at `to`.
+ */
 export function findPath(from: Position, to: Position, board: Board): Maybe<Path> {
   if (eq(from, to)) return Nothing;
   if (!inGrid(board, from) || !inGrid(board, to)) return Nothing;

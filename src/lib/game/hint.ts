@@ -2,6 +2,12 @@ import { Just, type Maybe, Nothing } from "purify-ts";
 import { findPath } from "@/lib/game/path";
 import type { Board, Tile } from "@/lib/game/types";
 
+/**
+ * Return any pair of same-animal tiles that are connected by a ≤2-turn path,
+ * or `Nothing` if no valid pair exists. Used by the Hint button, and by the
+ * board generator and shuffle to assert solvability. Returns the first match
+ * found — caller cannot assume optimality.
+ */
 export function findAnyValidPair(board: Board): Maybe<readonly [Tile, Tile]> {
   const byAnimal = new Map<string, Tile[]>();
   for (const row of board.cells) {
