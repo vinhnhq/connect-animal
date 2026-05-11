@@ -79,5 +79,5 @@ Hard requirement: **the game must play well on a phone.**
 
 - **Single accent.** Crimson is the only colored signal. Don't add a second accent without surfacing it for review — the discipline is the point.
 - **No body crimson.** Tinting paragraph text reduces the accent to background noise.
-- **shadcn primitives only for a11y wiring.** When using `Dialog`, `Select`, `RadioGroup` from `src/lib/ui/`, restyle them with these tokens. Don't ship the default shadcn skin.
+- **Native HTML + tokens, no component library.** The original plan was to wrap shadcn primitives, but the game ships built directly against semantic HTML (`<button>`, `<input type="radio">`, `<section>`) with V3 tokens applied via Tailwind. shadcn was removed in retro item R10 — if we add it back, restyle every primitive to these tokens before shipping.
 - **Borders are architecture, not decoration.** Use 3-px rules to **separate page regions**, not to wrap every element. Body text never sits inside a 3-px box.

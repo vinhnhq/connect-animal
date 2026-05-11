@@ -13,7 +13,7 @@ v2 (online same-board race) is scoped but not built. See [`__project__/specs/v2-
 - [Next.js 15](https://nextjs.org/) — App Router, `src/` layout
 - [React 19](https://react.dev/) — `useReducer` + custom hooks bridge a pure reducer to React; `document.startViewTransition` animates screen swaps
 - [TypeScript](https://www.typescriptlang.org/) — strict
-- [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- [Tailwind CSS v4](https://tailwindcss.com/) — utility styling with the locked V3 token set
 - [Bun](https://bun.sh/) — package manager, runtime, test runner
 - [Biome](https://biomejs.dev/) — lint and format (no ESLint, no Prettier)
 - [ts-pattern](https://github.com/gvergnaud/ts-pattern) — exhaustive pattern matching for game state

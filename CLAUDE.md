@@ -16,7 +16,7 @@ Read these before making changes:
 
 ## Stack
 
-Next.js 15 (App Router, `src/` layout) · React 19 · TypeScript strict · Tailwind v4 · shadcn/ui · Bun (PM + runtime + test runner) · Biome (lint + format) · ts-pattern · purify-ts.
+Next.js 15 (App Router, `src/` layout) · React 19 · TypeScript strict · Tailwind v4 · Bun (PM + runtime + test runner) · Biome (lint + format) · ts-pattern · purify-ts.
 
 ## Commands
 
@@ -55,7 +55,7 @@ src/
     ai/                      # computer opponent — pure
       move.ts                # pickMove: Maybe<Move>
       cadence.ts
-    ui/                      # shadcn primitives (auto-generated)
+  personal-best/             # PB-per-board-size storage adapter (pure)
   hooks/                     # React glue
 __project__/                 # docs, specs, tasks (never imported)
 e2e/                         # Playwright smoke tests
@@ -111,7 +111,7 @@ Move cadence is a separate pure function (`nextDelayMs(difficulty, rng)`) and th
 - File names: **kebab-case for everything**, including components — `board.tsx`, `tile.tsx`, `use-game.ts`, `find-path.ts`. Component identifiers exported from those files stay PascalCase (`export function Board() {}`). Unix-style filenames; no Windows-style PascalCase or spaces.
 - Tests live next to source in `__tests__/` folders.
 - Imports: absolute via `@/` (configured in `tsconfig.json`); no deep relative paths.
-- shadcn components are committed under `src/lib/ui/` — if one needs customizing, edit it in place; don't wrap.
+- No component library. UI is native HTML + Tailwind + V3 tokens. If a future a11y primitive earns its keep, restyle it to the V3 tokens before shipping (see `__project__/docs/design.md`).
 - Commits: small, one task per commit, Conventional Commits style (`feat:`, `fix:`, `test:`, `docs:`, `chore:`).
 
 ## When you finish a task
