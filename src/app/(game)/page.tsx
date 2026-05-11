@@ -4,6 +4,7 @@ import { startTransition, useEffect, useRef, useState } from "react";
 import { BoardView } from "@/app/(game)/_components/board";
 import { ConfigForm, type ConfigFormHandle } from "@/app/(game)/_components/config-form";
 import { PathFlash } from "@/app/(game)/_components/path-flash";
+import { useAiOpponent } from "@/hooks/use-ai-opponent";
 import { useGame } from "@/hooks/use-game";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { findPath } from "@/lib/game/path";
@@ -23,6 +24,15 @@ export default function GamePage() {
 
   const isPlaying = game.state.status === "Playing";
   const isTerminal = game.state.status === "Won" || game.state.status === "Lost";
+
+  useAiOpponent({
+    state: game.state,
+    match: (a, b) => {
+      if (game.state.status !== "Playing") return;
+      findPath(a, b, game.state.board).ifJust((p) => setFlash({ path: p, key: Date.now() }));
+      game.match("computer", a, b);
+    },
+  });
 
   useEffect(() => {
     if (!flash) return;

@@ -33,11 +33,12 @@ describe("game types", () => {
     expect(summarize({ status: "Configuring", config: sampleConfig })).toBe("config");
   });
 
-  test("Event is exhaustive across the six kinds", () => {
+  test("Event is exhaustive across the seven kinds", () => {
     const label = (e: Event): string =>
       match(e)
         .with({ kind: "StartGame" }, () => "start")
         .with({ kind: "Select" }, () => "select")
+        .with({ kind: "Match" }, () => "match")
         .with({ kind: "Hint" }, () => "hint")
         .with({ kind: "Shuffle" }, () => "shuffle")
         .with({ kind: "Tick" }, () => "tick")
@@ -48,6 +49,9 @@ describe("game types", () => {
       "start",
     );
     expect(label({ kind: "Restart" })).toBe("restart");
+    expect(
+      label({ kind: "Match", player: "computer", a: { col: 0, row: 0 }, b: { col: 1, row: 0 } }),
+    ).toBe("match");
   });
 
   test("Player is the human/computer pair", () => {

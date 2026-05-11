@@ -29,6 +29,7 @@ function onConfiguring(state: Configuring, event: Event): GameState {
   return match(event)
     .with({ kind: "StartGame" }, (e) => startNewGame(e.config, e.now, e.rng))
     .with({ kind: "Select" }, () => state)
+    .with({ kind: "Match" }, () => state)
     .with({ kind: "Hint" }, () => state)
     .with({ kind: "Shuffle" }, () => state)
     .with({ kind: "Tick" }, () => state)
@@ -40,6 +41,7 @@ function onPlaying(state: Playing, event: Event): GameState {
   return match(event)
     .with({ kind: "StartGame" }, () => state)
     .with({ kind: "Select" }, (e) => handleSelect(state, e.player, e.at))
+    .with({ kind: "Match" }, (e) => handleMatch(state, e.player, e.a, e.b))
     .with({ kind: "Hint" }, () => handleHint(state))
     .with({ kind: "Shuffle" }, (e) => ({
       ...state,
@@ -60,6 +62,7 @@ function onTerminal(state: Won | Lost, event: Event): GameState {
     .with({ kind: "Restart" }, (): Configuring => ({ status: "Configuring", config: state.config }))
     .with({ kind: "StartGame" }, () => state)
     .with({ kind: "Select" }, () => state)
+    .with({ kind: "Match" }, () => state)
     .with({ kind: "Hint" }, () => state)
     .with({ kind: "Shuffle" }, () => state)
     .with({ kind: "Tick" }, () => state)
@@ -129,6 +132,39 @@ function handleSelect(state: Playing, player: Player, at: Position): GameState {
     selected: null,
     hint: null,
     scores: newScores,
+  };
+}
+
+function handleMatch(state: Playing, player: Player, a: Position, b: Position): GameState {
+  if (eqPos(a, b)) return state;
+  const cellA = cellAt(state.board, a);
+  const cellB = cellAt(state.board, b);
+  if (!cellA || !cellB || cellA.animal !== cellB.animal) return state;
+  if (findPath(a, b, state.board).isNothing()) return state;
+
+  const newBoard = clearCells(state.board, [a, b]);
+  const newScores: Record<Player, number> = {
+    ...state.scores,
+    [player]: state.scores[player] + 1,
+  };
+
+  if (boardIsEmpty(newBoard)) {
+    const won: Won = {
+      status: "Won",
+      config: state.config,
+      board: newBoard,
+      scores: newScores,
+      totalMs: state.elapsedMs,
+      winner: player,
+    };
+    return won;
+  }
+
+  return {
+    ...state,
+    board: newBoard,
+    scores: newScores,
+    hint: null,
   };
 }
 

@@ -14,6 +14,7 @@ export type UseGameApi = {
   state: GameState;
   start: (config: Config) => void;
   select: (player: Player, at: Position) => void;
+  match: (player: Player, a: Position, b: Position) => void;
   hint: () => void;
   shuffle: () => void;
   tick: () => void;
@@ -38,6 +39,9 @@ export function useGame({ initialConfig, rng, now }: UseGameOptions): UseGameApi
   const select = useCallback((player: Player, at: Position) => {
     dispatch({ kind: "Select", player, at });
   }, []);
+  const matchPair = useCallback((player: Player, a: Position, b: Position) => {
+    dispatch({ kind: "Match", player, a, b });
+  }, []);
   const hint = useCallback(() => {
     dispatch({ kind: "Hint" });
   }, []);
@@ -51,5 +55,5 @@ export function useGame({ initialConfig, rng, now }: UseGameOptions): UseGameApi
     dispatch({ kind: "Restart" });
   }, []);
 
-  return { state, start, select, hint, shuffle, tick, restart };
+  return { state, start, select, match: matchPair, hint, shuffle, tick, restart };
 }

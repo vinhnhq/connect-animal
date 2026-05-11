@@ -95,6 +95,7 @@ export type GameState = Configuring | Playing | Won | Lost;
 export type Event =
   | { kind: "StartGame"; config: Config; now: number; rng: () => number }
   | { kind: "Select"; player: Player; at: Position }
+  | { kind: "Match"; player: Player; a: Position; b: Position }
   | { kind: "Hint" }
   | { kind: "Shuffle"; rng: () => number }
   | { kind: "Tick"; now: number }
