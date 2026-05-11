@@ -3,6 +3,7 @@
 import { startTransition, useEffect, useRef, useState } from "react";
 import { BoardView } from "@/app/(game)/_components/board";
 import { ConfigForm, type ConfigFormHandle } from "@/app/(game)/_components/config-form";
+import { GameOver } from "@/app/(game)/_components/game-over";
 import { PathFlash } from "@/app/(game)/_components/path-flash";
 import { Toolbar } from "@/app/(game)/_components/toolbar";
 import { useAiOpponent } from "@/hooks/use-ai-opponent";
@@ -90,6 +91,21 @@ export default function GamePage() {
         </p>
         <ConfigForm ref={configRef} onStart={handleStart} />
       </section>
+
+      {isTerminal && (game.state.status === "Won" || game.state.status === "Lost") ? (
+        <GameOver
+          state={game.state}
+          onPlayAgain={() => {
+            if (game.state.status === "Won" || game.state.status === "Lost") {
+              const cfg = game.state.config;
+              withViewTransition(() => game.start(cfg));
+            }
+          }}
+          onChangeSettings={() => {
+            withViewTransition(() => game.restart());
+          }}
+        />
+      ) : null}
 
       {isPlaying && game.state.status === "Playing" ? (
         <section className="mt-8 space-y-4">
