@@ -8,6 +8,7 @@ import { PathFlash } from "@/app/(game)/_components/path-flash";
 import { Toolbar } from "@/app/(game)/_components/toolbar";
 import { useAiOpponent } from "@/hooks/use-ai-opponent";
 import { useGame } from "@/hooks/use-game";
+import { usePersonalBests } from "@/hooks/use-personal-bests";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { findPath } from "@/lib/game/path";
 import type { Cell, Config, Path, Position } from "@/lib/game/types";
@@ -23,6 +24,7 @@ export default function GamePage() {
   const configRef = useRef<ConfigFormHandle | null>(null);
   const reducedMotion = useReducedMotion();
   const [flash, setFlash] = useState<{ path: Path; key: number } | null>(null);
+  const personalBests = usePersonalBests();
 
   const isPlaying = game.state.status === "Playing";
   const isTerminal = game.state.status === "Won" || game.state.status === "Lost";
@@ -48,6 +50,12 @@ export default function GamePage() {
     const id = setInterval(() => game.tick(), 250);
     return () => clearInterval(id);
   }, [game.state.status, game.tick]);
+
+  useEffect(() => {
+    if (game.state.status === "Won" && game.state.winner === "human") {
+      personalBests.record(game.state.config.boardSize, game.state.totalMs);
+    }
+  }, [game.state, personalBests.record]);
 
   function handleStart(config: Config) {
     withViewTransition(() => {
@@ -89,7 +97,7 @@ export default function GamePage() {
         <p className="mb-6 text-[10px] font-medium uppercase tracking-[0.2em] text-neutral-500">
           New game
         </p>
-        <ConfigForm ref={configRef} onStart={handleStart} />
+        <ConfigForm ref={configRef} onStart={handleStart} personalBests={personalBests.bests} />
       </section>
 
       {isTerminal && (game.state.status === "Won" || game.state.status === "Lost") ? (

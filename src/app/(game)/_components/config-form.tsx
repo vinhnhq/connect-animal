@@ -3,6 +3,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import type { BoardSize, Config, Difficulty } from "@/lib/game/types";
 
+export type PersonalBestsMap = Partial<Record<BoardSize, number | null>>;
+
 export const STORAGE_KEY = "connect-animal:config";
 
 const DEFAULTS: Config = {
@@ -62,10 +64,11 @@ function save(config: Config) {
 
 type Props = {
   onStart: (config: Config) => void;
+  personalBests?: PersonalBestsMap;
 };
 
 export const ConfigForm = forwardRef<ConfigFormHandle, Props>(function ConfigForm(
-  { onStart },
+  { onStart, personalBests },
   ref,
 ) {
   const [config, setConfig] = useState<Config>(DEFAULTS);
@@ -99,17 +102,21 @@ export const ConfigForm = forwardRef<ConfigFormHandle, Props>(function ConfigFor
           Board size
         </legend>
         <div role="radiogroup" aria-label="Board size" className="grid grid-cols-3 gap-2 sm:gap-3">
-          {BOARD_SIZES.map((opt) => (
-            <RadioCard
-              key={opt.value}
-              name="boardSize"
-              value={opt.value}
-              checked={config.boardSize === opt.value}
-              label={opt.label}
-              hint={opt.dims}
-              onChange={() => update({ boardSize: opt.value })}
-            />
-          ))}
+          {BOARD_SIZES.map((opt) => {
+            const pb = personalBests?.[opt.value];
+            const hint = pb && pb > 0 ? `${opt.dims} · ${formatMs(pb)}` : opt.dims;
+            return (
+              <RadioCard
+                key={opt.value}
+                name="boardSize"
+                value={opt.value}
+                checked={config.boardSize === opt.value}
+                label={opt.label}
+                hint={hint}
+                onChange={() => update({ boardSize: opt.value })}
+              />
+            );
+          })}
         </div>
       </fieldset>
 
@@ -141,6 +148,13 @@ export const ConfigForm = forwardRef<ConfigFormHandle, Props>(function ConfigFor
     </form>
   );
 });
+
+function formatMs(ms: number): string {
+  const total = Math.floor(ms / 1000);
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+}
 
 function RadioCard({
   name,
