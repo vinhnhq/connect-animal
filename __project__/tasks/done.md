@@ -21,3 +21,4 @@ Format:
 - 2026-05-08 · `da9d4e3` · 1.4 shuffleRemaining preserves positions and animals.
 - 2026-05-08 · `b438d85` · 1.5 Exhaustive reducer via ts-pattern (4×6 transitions).
 - 2026-05-08 · `c6d37a6` · 1.6 findAnyValidPair returns Maybe<[Tile, Tile]>.
+- 2026-05-08 · `d55d14b` · 1.7 Seeded property tests (1000 boards solvable, 100 play-to-completion).
