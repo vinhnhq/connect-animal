@@ -4,14 +4,14 @@ A web reimplementation of the **Pikachu / Onet Connect** tile-matching game. Mat
 
 ## Status
 
-**v1 in progress** — solo vs. computer. Spec at [`__project__/specs/v1-solo-vs-computer.md`](__project__/specs/v1-solo-vs-computer.md).
+**v1 playable** — solo vs. an Easy / Medium / Hard computer opponent on a shared board. Spec in [`__project__/specs/v1-solo-vs-computer.md`](__project__/specs/v1-solo-vs-computer.md), progress in [`__project__/tasks/done.md`](__project__/tasks/done.md).
 
 v2 (online same-board race) is scoped but not built. See [`__project__/specs/v2-online-same-board.md`](__project__/specs/v2-online-same-board.md).
 
 ## Stack
 
 - [Next.js 15](https://nextjs.org/) — App Router, `src/` layout
-- [React 19](https://react.dev/) — `<Activity>` and View Transitions for screen and state animations
+- [React 19](https://react.dev/) — `useReducer` + custom hooks bridge a pure reducer to React; `document.startViewTransition` animates screen swaps
 - [TypeScript](https://www.typescriptlang.org/) — strict
 - [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - [Bun](https://bun.sh/) — package manager, runtime, test runner
@@ -21,18 +21,26 @@ v2 (online same-board race) is scoped but not built. See [`__project__/specs/v2-
 
 ## Quick start
 
-> The Next app is not scaffolded yet — these commands document the planned interface and will work after task `0.1` in [`__project__/tasks/backlog.md`](__project__/tasks/backlog.md).
-
 ```bash
-bun install
-bun dev          # start Next.js dev server at http://localhost:3000
-bun test         # run all tests
-bun test --watch # TDD loop
-bun lint         # Biome check
-bun format       # Biome write
-bun typecheck    # tsc --noEmit
-bun e2e          # Playwright smoke tests
+bun install                  # installs deps
+bun dev                      # http://localhost:3000 — config screen, then play
+bun test                     # bun:test, all 148+ tests
+bun test --watch             # TDD loop
+bun test src/lib/game        # filter by path
+bun lint                     # Biome check (lint + format)
+bun format                   # Biome --write
+bun typecheck                # tsc --noEmit
+bun e2e                      # Playwright smoke (configure → 3 matches → quit)
+bun run build && bun run start   # production build + serve
 ```
+
+First run takes ~30s to install. After that, `bun dev` is sub-second.
+
+Playwright needs browser binaries on first run: `bunx playwright install chromium`.
+
+## Design system
+
+The visual language is locked — V3 brutalist (dialed down). Live storybook at [`http://localhost:3000/preview`](http://localhost:3000/preview) once the dev server is running; token reference in [`__project__/docs/design.md`](__project__/docs/design.md).
 
 ## How to play
 
