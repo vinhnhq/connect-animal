@@ -4,6 +4,7 @@ import { startTransition, useEffect, useRef, useState } from "react";
 import { BoardView } from "@/app/(game)/_components/board";
 import { ConfigForm, type ConfigFormHandle } from "@/app/(game)/_components/config-form";
 import { PathFlash } from "@/app/(game)/_components/path-flash";
+import { Toolbar } from "@/app/(game)/_components/toolbar";
 import { useAiOpponent } from "@/hooks/use-ai-opponent";
 import { useGame } from "@/hooks/use-game";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
@@ -40,6 +41,12 @@ export default function GamePage() {
     const t = setTimeout(() => setFlash(null), duration);
     return () => clearTimeout(t);
   }, [flash, reducedMotion]);
+
+  useEffect(() => {
+    if (game.state.status !== "Playing") return;
+    const id = setInterval(() => game.tick(), 250);
+    return () => clearInterval(id);
+  }, [game.state.status, game.tick]);
 
   function handleStart(config: Config) {
     withViewTransition(() => {
@@ -86,6 +93,14 @@ export default function GamePage() {
 
       {isPlaying && game.state.status === "Playing" ? (
         <section className="mt-8 space-y-4">
+          <Toolbar
+            board={game.state.board}
+            onHint={game.hint}
+            onShuffle={game.shuffle}
+            elapsedMs={game.state.elapsedMs}
+            humanScore={game.state.scores.human}
+            computerScore={game.state.scores.computer}
+          />
           <div className="relative">
             <BoardView
               board={game.state.board}
