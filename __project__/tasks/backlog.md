@@ -30,23 +30,23 @@ Tasks are ordered. Each task is **red → green → refactor → commit**. A tas
 
 ## Phase 3 — UI: configure → play
 
-- [ ] **3.1** `app/(game)/page.tsx` — config screen with shadcn controls. Defaults from `localStorage`, persists on change.
-- [ ] **3.2** `app/(game)/_components/board.tsx` — render board, tile selection, keyboard nav, focus ring.
-- [ ] **3.3** Wire `useGame` hook bridging reducer + React state. Component test: dispatching `Select` twice on a valid pair clears them.
-- [ ] **3.4** Path-flash overlay animation on successful match. Respect `prefers-reduced-motion`.
-- [ ] **3.5** `<ViewTransition>` config↔play. `<Activity>` preserves config state.
-- [ ] **3.6** AI loop: `useEffect` schedules `pickMove` and dispatches; cancel on unmount.
+- [x] **3.1** `app/(game)/page.tsx` — config screen with shadcn controls. Defaults from `localStorage`, persists on change.
+- [x] **3.2** `app/(game)/_components/board.tsx` — render board, tile selection, keyboard nav, focus ring.
+- [x] **3.3** Wire `useGame` hook bridging reducer + React state. Component test: dispatching `Select` twice on a valid pair clears them.
+- [x] **3.4** Path-flash overlay animation on successful match. Respect `prefers-reduced-motion`.
+- [x] **3.5** `<ViewTransition>` config↔play. `<Activity>` preserves config state.
+- [x] **3.6** AI loop: `useEffect` schedules `pickMove` and dispatches; cancel on unmount.
 
 ## Phase 4 — Polish
 
-- [ ] **4.1** Hint button + Shuffle button (enabled state from reducer).
-- [ ] **4.2** Win/Lose dialog with time, "Play again", "Change settings".
-- [ ] **4.3** Personal-best storage per board size (localStorage adapter is a pure function + a thin wrapper).
-- [ ] **4.4** Lighthouse pass (Performance ≥ 90, Accessibility ≥ 95).
-- [ ] **4.5** Playwright smoke: configure Medium / Easy AI → make three valid matches → quit.
+- [x] **4.1** Hint button + Shuffle button (enabled state from reducer).
+- [x] **4.2** Win/Lose dialog with time, "Play again", "Change settings".
+- [x] **4.3** Personal-best storage per board size (localStorage adapter is a pure function + a thin wrapper).
+- [x] **4.4** Lighthouse pass (Performance ≥ 90, Accessibility ≥ 95).
+- [x] **4.5** Playwright smoke: configure Medium / Easy AI → make three valid matches → quit.
 
 ## Phase 5 — Docs
 
-- [ ] **5.1** README "Quick start" verified end-to-end on a fresh clone.
-- [ ] **5.2** Inline JSDoc on every exported symbol of `lib/game` and `lib/ai`.
-- [ ] **5.3** Update `__project__/docs/architecture.md` with anything that drifted during build.
+- [x] **5.1** README "Quick start" verified end-to-end on a fresh clone.
+- [x] **5.2** Inline JSDoc on every exported symbol of `lib/game` and `lib/ai`.
+- [x] **5.3** Update `__project__/docs/architecture.md` with anything that drifted during build.

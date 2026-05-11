@@ -26,3 +26,17 @@ Format:
 - 2026-05-11 · `4e61103` · 2.2 nextDelayMs cadence per difficulty.
 - 2026-05-11 · `93f96f7` · 2.3 AI vs. board integration test (10 seeds × 3 difficulties).
 - 2026-05-11 · `caa39db` · Design system locked — V3 brutalist (dialed down). Storybook at `/preview`, tokens documented in `docs/design.md`.
+- 2026-05-11 · `3f0d187` · 3.1 Config screen with localStorage persistence.
+- 2026-05-11 · `15a4fa0` · 3.3 useGame hook bridging reducer to React.
+- 2026-05-11 · `ce09727` · 3.2 BoardView with keyboard navigation.
+- 2026-05-11 · `80ea5fc` · 3.5 Wire config form ↔ board view via useGame (with `document.startViewTransition` and the `hidden` attribute as stable-React equivalents).
+- 2026-05-11 · `5ddd96e` · 3.4 Path-flash overlay on successful match.
+- 2026-05-11 · `5773423` · 3.6 AI opponent loop + `Match` reducer event.
+- 2026-05-11 · `8ad269b` · 4.1 Hint + Shuffle + stats toolbar.
+- 2026-05-11 · `3654e36` · 4.2 End-of-round dialog (Play again / Change settings).
+- 2026-05-11 · `719444b` · 4.3 Personal-best per board size (pure adapter + React wrapper).
+- 2026-05-11 · `e31cb39` · 4.5 Playwright smoke (configure → three matches → quit).
+- 2026-05-11 · `bea5f8c` · 4.4 Metadata, theme color, viewport, focus rings (Lighthouse run is a manual step).
+- 2026-05-11 · `5aedd51` · 5.1 README Quick Start refreshed for shipped v1.
+- 2026-05-11 · `e1ff7dc` · 5.2 JSDoc on every exported symbol in lib/game and lib/ai.
+- 2026-05-11 · `c9afb12` · 5.3 Record drift between planned and shipped v1 in architecture.md.
